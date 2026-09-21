@@ -116,10 +116,11 @@ class MemberCreate(BaseModel):
     @field_validator("email")
     @classmethod
     def normalize_email(cls, value: str) -> str:
-        """Validate and normalize the email address."""
-        if not EMAIL_PATTERN.match(value):
+        """Strip, lowercase, then validate the email address."""
+        email = value.strip().lower()
+        if not EMAIL_PATTERN.match(email):
             raise ValueError("email is not valid")
-        return value
+        return email
 
 
 class MemberOut(BaseModel):
