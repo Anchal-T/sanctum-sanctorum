@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    { "source": "/health", "destination": "https://sanctum-sanctorum-9x63.onrender.com/health" },
+    { "source": "/books", "destination": "https://sanctum-sanctorum-9x63.onrender.com/books" },
+    { "source": "/books/:path*", "destination": "https://sanctum-sanctorum-9x63.onrender.com/books/:path*" },
+    { "source": "/members", "destination": "https://sanctum-sanctorum-9x63.onrender.com/members" },
+    { "source": "/members/:path*", "destination": "https://sanctum-sanctorum-9x63.onrender.com/members/:path*" },
+    { "source": "/orders", "destination": "https://sanctum-sanctorum-9x63.onrender.com/orders" },
+    { "source": "/orders/:path*", "destination": "https://sanctum-sanctorum-9x63.onrender.com/orders/:path*" },
+    { "source": "/loans", "destination": "https://sanctum-sanctorum-9x63.onrender.com/loans" },
+    { "source": "/loans/:path*", "destination": "https://sanctum-sanctorum-9x63.onrender.com/loans/:path*" },
+    { "source": "/reports", "destination": "https://sanctum-sanctorum-9x63.onrender.com/reports" },
+    { "source": "/reports/:path*", "destination": "https://sanctum-sanctorum-9x63.onrender.com/reports/:path*" }
+  ]
+}
