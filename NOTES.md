@@ -36,6 +36,29 @@ and tests simple, but Render's filesystem is ephemeral, so deployment data can
 reset after a restart or redeploy. A hosted Postgres database would be the
 next production-hardening step.
 
+## Known issues found during browser verification
+
+The Loans page renders a Return button, but clicking it does nothing.
+
+Reproduction:
+
+1. Sign in as member `#1`.
+2. Borrow an available book.
+3. Open the Loans tab.
+4. Click Return.
+
+Expected behavior: the loan is returned, the book's stock is restored, and the
+loan changes to `returned`.
+
+Actual behavior: the Return button remains visible, the loan stays active, and
+no request is sent.
+
+Root cause: `frontend/app.js` renders `data-action="loan-return"` for the
+button, but the `initActions()` dispatcher has no `loan-return` case. The
+backend `POST /loans/{id}/return` endpoint works when called directly.
+
+Status: known frontend issue, not fixed in this submission.
+
 ## Architecture and trade-offs
 
 - Routers remain thin and handle HTTP parsing and dependency injection.
@@ -85,6 +108,12 @@ understanding the code:
   and Render URLs directly through `/`, `/health`, and `/books`. I also
   checked the repository status and tracked-file list for secrets and
   generated files.
+- During browser verification, I used the browser tooling to exercise the
+  deployed UI rather than assuming that passing backend tests proved the
+  frontend worked. This exposed the loan Return issue. I reproduced it by
+  clicking the button, confirmed that the loan remained active, then compared
+  the rendered `loan-return` action with the `initActions()` dispatcher and
+  documented the mismatch instead of claiming the flow was complete.
 - I made the final scope decisions myself. Optional concurrency protection and
   the paginated members endpoint were left out intentionally and documented
   rather than adding untested complexity.
